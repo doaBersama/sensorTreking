@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class homescreen extends AppCompatActivity implements SensorEventListener {
@@ -15,6 +17,7 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
     private SensorManager sensorManager;
 
     private boolean lightStatus;
+    boolean mulaiSensor = false;
 
     TextView x;
     TextView y;
@@ -41,6 +44,22 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
                 (Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor
                 (Sensor.TYPE_LIGHT), SensorManager.SENSOR_DELAY_NORMAL);
+
+        final Button startBtn = (Button) findViewById(R.id.btnStart);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+                mulaiSensor = true;
+            }
+        });
+
+        final Button stopBtn = (Button) findViewById(R.id.btnStop);
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+                mulaiSensor = false;
+            }
+        });
 
     }
 
@@ -75,20 +94,21 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
             }
 
         }
+        if(mulaiSensor == true) {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
-        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+                float xVal = event.values[0];
+                float yVal = event.values[1];
+                float zVal = event.values[2];
 
-            float xVal = event.values[0];
-            float yVal = event.values[1];
-            float zVal = event.values[2];
+                sx = "X Value : <font color = '#800080'> " + xVal + "</font>";
+                sy = "Y Value : <font color = '#800080'> " + yVal + "</font>";
+                sz = "Z Value : <font color = '#800080'> " + zVal + "</font>";
 
-            sx = "X Value : <font color = '#800080'> " + xVal + "</font>";
-            sy = "Y Value : <font color = '#800080'> " + yVal + "</font>";
-            sz = "Z Value : <font color = '#800080'> " + zVal + "</font>";
-
-            x.setText(Html.fromHtml(sx));
-            y.setText(Html.fromHtml(sy));
-            z.setText(Html.fromHtml(sz));
+                x.setText(Html.fromHtml(sx));
+                y.setText(Html.fromHtml(sy));
+                z.setText(Html.fromHtml(sz));
+            }
         }
     }
 }

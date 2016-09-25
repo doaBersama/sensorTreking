@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SensorTreking.iml" filepath="$PROJECT_DIR$/SensorTreking.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sensorTreking.iml" filepath="$PROJECT_DIR$/sensorTreking.iml" />
     </modules>
   </component>
 </project>
