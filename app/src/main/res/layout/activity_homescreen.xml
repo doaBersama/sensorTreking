@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="id.its.ggsensor.sensortreking.homescreen">
+
+    <TextView
+        android:id="@+id/sensorTitle"
+        android:textSize="25sp"
+        android:textColor="#4169E1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+        android:text="Accelerometer" />
+
+    <TextView
+        android:id="@+id/xVal"
+        android:textSize="18sp"
+        android:textColor="#FF0000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/yVal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="X Value" />
+
+    <TextView
+        android:id="@+id/yVal"
+        android:textSize="18sp"
+        android:textColor="#FF0000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Y Value" />
+
+    <TextView
+        android:id="@+id/zVal"
+        android:textSize="18sp"
+        android:textColor="#FF0000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/yVal"
+        android:layout_marginTop="30dp"
+        android:text="Z Value" />
+
+    <Button
+        android:layout_marginTop="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/button"
+        android:layout_below="@+id/zVal"
+        android:layout_centerHorizontal="true"
+        android:enabled="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/lightText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button" />
+</RelativeLayout>
