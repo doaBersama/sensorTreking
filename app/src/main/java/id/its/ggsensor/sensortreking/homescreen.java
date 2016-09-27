@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -11,6 +12,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.opencsv.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class homescreen extends AppCompatActivity implements SensorEventListener {
 
@@ -61,7 +69,9 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
             }
         });
 
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,6 +90,15 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
     public void onSensorChanged(SensorEvent event) {
         // TODO Auto-generated method stub
 
+        File sdCard = Environment.getExternalStorageDirectory();
+        //File dir = new File (sdCard.getAbsolutePath() + "");
+        //dir.mkdirs();
+        //File file = new File(dir, "filename");
+
+        //FileOutputStream f = new FileOutputStream(file);
+
+        CSVWriter writer = null;
+
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             float light = event.values[0];
 
@@ -94,6 +113,7 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
             }
 
         }
+
         if(mulaiSensor == true) {
             if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
@@ -108,7 +128,19 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
                 x.setText(Html.fromHtml(sx));
                 y.setText(Html.fromHtml(sy));
                 z.setText(Html.fromHtml(sz));
+                String coba = xVal+"#"+yVal+"#"+zVal;
+                try {
+                    writer = new CSVWriter(new FileWriter(sdCard.getAbsolutePath()+"/myfile.csv", true), ',');
+                    String[] entries = coba.split("#"); // array of your values
+                    writer.writeNext(entries);
+                    writer.close();
+                }
+                catch (IOException e) {
+                    //error
+                }
+
             }
         }
+
     }
 }
