@@ -19,13 +19,23 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class homescreen extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager sensorManager;
 
     private boolean lightStatus;
+    private String fileName;
     boolean mulaiSensor = false;
+
+    private float tmpX;
+    private float tmpY;
+    private float tmpZ;
+
+    float light = 100000;
 
     TextView x;
     TextView y;
@@ -57,6 +67,13 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
         startBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+                Date date = new Date();
+                fileName = dateFormat.format(date);
+
+                tmpX=tmpY=tmpZ=0;
+                light = 10000;
+
                 mulaiSensor = true;
             }
         });
@@ -100,7 +117,7 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
         CSVWriter writer = null;
 
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
-            float light = event.values[0];
+            light = event.values[0];
 
             String txt = "Light : " + light;
 
@@ -128,17 +145,21 @@ public class homescreen extends AppCompatActivity implements SensorEventListener
                 x.setText(Html.fromHtml(sx));
                 y.setText(Html.fromHtml(sy));
                 z.setText(Html.fromHtml(sz));
-                String coba = xVal+"#"+yVal+"#"+zVal;
-                try {
-                    writer = new CSVWriter(new FileWriter(sdCard.getAbsolutePath()+"/myfile.csv", true), ',');
-                    String[] entries = coba.split("#"); // array of your values
-                    writer.writeNext(entries);
-                    writer.close();
-                }
-                catch (IOException e) {
-                    //error
-                }
+                String coba = xVal+"#"+yVal+"#"+zVal+"#"+light;
 
+                if((Math.abs(xVal-tmpX)>0.5 || Math.abs(yVal-tmpY)>0.5 || Math.abs(zVal-tmpZ)>0.5) && light < 25) {
+                    try {
+                        writer = new CSVWriter(new FileWriter(sdCard.getAbsolutePath() + "/" + fileName + ".csv", true), ',');
+                        String[] entries = coba.split("#"); // array of your values
+                        writer.writeNext(entries);
+                        writer.close();
+                        tmpX = xVal;
+                        tmpY = yVal;
+                        tmpZ = zVal;
+                    } catch (IOException e) {
+                        //error
+                    }
+                }
             }
         }
 
